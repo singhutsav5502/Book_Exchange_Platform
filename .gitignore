@@ -13,6 +13,7 @@ node_modules
 
 # misc
 .DS_Store
+/platform_server/.env
 .env.local
 .env.development.local
 .env.test.local
