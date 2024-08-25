@@ -31,7 +31,7 @@ const theme = createTheme({
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Navigate to="/log-in" replace />,
+    element: <Navigate to="/login" replace />,
   },
   {
     path: "/login",

@@ -15,7 +15,7 @@ const Signup = () => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-      email: data.get("email"),
+      username: data.get("username"),
       firstName: data.get("firstName"),
       lastName: data.get("lastName"),
       password: data.get("password"),
@@ -66,10 +66,10 @@ const Signup = () => {
               <TextField
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
+                id="username"
+                label="username"
+                name="username"
+                autoComplete="username"
               />
             </Grid>
             <Grid item xs={12}>
