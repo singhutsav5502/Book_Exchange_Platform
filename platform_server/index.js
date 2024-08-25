@@ -4,12 +4,12 @@ const bcrypt = require('bcryptjs');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const User = require('./models/User');
-
+const cors = require('cors');
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
+app.use(cors());
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI)
     .then(() => console.log('Connected to MongoDB'))
@@ -50,13 +50,14 @@ app.post('/signup', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Save user to database
-    const user = new User({ username, password: hashedPassword, firstName, lastName });
+    const user = new User({ username, passwordHash: hashedPassword, firstName, lastName });
     await user.save();
 
+    const creation_time = new Date().toISOString();
     // Generate JWT token
     const token = jwt.sign({ username }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    res.json({ token });
+    res.json({ token, creation_time });
 });
 
 // Login route
@@ -75,15 +76,16 @@ app.post('/login', async (req, res) => {
     }
     
     // Check password
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.passwordHash);
     if (!isMatch) {
         return res.status(400).json({ message: 'Invalid username or password' });
     }
 
+    const creation_time = new Date().toISOString();
     // Generate JWT token
     const token = jwt.sign({ username }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    res.json({ token });
+    res.json({ token, creation_time});
 });
 
 // Protected route example
