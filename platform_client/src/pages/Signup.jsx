@@ -10,16 +10,26 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Link as RouterLink } from "react-router-dom";
+import { signup } from "../api/authApi";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../slice/authSlice";
+import { toast } from "react-toastify";
 const Signup = () => {
-  const handleSubmit = (event) => {
+  const dispatch = useDispatch();
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      username: data.get("username"),
-      firstName: data.get("firstName"),
-      lastName: data.get("lastName"),
-      password: data.get("password"),
-    });
+    const formData = new FormData(event.currentTarget);
+    const username = formData.get("username");
+    const firstName = formData.get("firstName");
+    const lastName = formData.get("lastName");
+    const password = formData.get("password");
+    try {
+      const tokenData = await signup(username, password, firstName, lastName);
+      dispatch(setCredentials({ username, token: tokenData.token, creation_time:tokenData.creation_time }));
+      toast.success("Signup successful!");
+    } catch (error) {
+      toast.error(`An error ocurred: ${error.message}`);
+    }
   };
 
   return (

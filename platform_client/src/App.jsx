@@ -1,6 +1,7 @@
 import React from "react";
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
+import Home from "./pages/Home.jsx";
 import Background from "./components/Background.jsx";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
     path: "/sign-up",
     element: <Background><Signup /></Background>,
   },
+  {
+    path:"/Home",
+    element: <Home />
+  }
 ]);
 const App = () => {
   return (

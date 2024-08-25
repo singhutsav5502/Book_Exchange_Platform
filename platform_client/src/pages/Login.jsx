@@ -12,14 +12,46 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { Link as RouterLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCredentials, getCredentials, clearCredentials } from "../slice/authSlice";
+import { login } from "../api/authApi";
+import { toast } from "react-toastify";
+import { Navigate } from "react-router-dom";
+import { hasTokenExpired } from "../utils/utils";
 const Login = () => {
-  const handleSubmit = (event) => {
+  const dispatch = useDispatch();
+
+  // get credentials
+  const credentials = dispatch(getCredentials());
+  const tokenHasExpired = hasTokenExpired(credentials.creation_time);
+
+  // validate token existence and expiry
+  if (credentials.token !== "" && !tokenHasExpired)
+    return <Navigate to="/Home" replace />;
+  else if(tokenHasExpired){
+    toast.warn("Session Token has Expired, Logging out")
+    dispatch(clearCredentials());
+  }
+
+  // Login
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      username: data.get("username"),
-      password: data.get("password"),
-    });
+    const formData = new FormData(event.currentTarget);
+    const username = formData.get("username");
+    const password = formData.get("password");
+    try {
+      const tokenData = await login(username, password);
+      dispatch(
+        setCredentials({
+          username,
+          token: tokenData.token,
+          creation_time: tokenData.creation_time,
+        })
+      );
+      toast.success("Login successful!");
+    } catch (error) {
+      toast.error(`An error ocurred: ${error.message}`);
+    }
   };
 
   return (
