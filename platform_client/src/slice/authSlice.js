@@ -13,22 +13,15 @@ const authSlice = createSlice({
     setCredentials: (state, action) => {
       state.username = action.payload.username;
       state.token = action.payload.token;
-      state.creation_time  = action.payload.creation_time;
+      state.creation_time = action.payload.creation_time;
     },
     clearCredentials: (state) => {
       state.username = '';
       state.token = '';
       state.creation_time = '';
-    },
-    getCredentials: (state,action)=>{
-      return {
-        username: state.username,
-        token: state.token,
-        creation_time: state.creation_time,
-      }
     }
   }
 });
 
-export const { setCredentials, clearCredentials, getCredentials } = authSlice.actions;
+export const { setCredentials, clearCredentials } = authSlice.actions;
 export default authSlice.reducer;

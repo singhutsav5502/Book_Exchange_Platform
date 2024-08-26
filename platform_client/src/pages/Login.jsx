@@ -13,21 +13,26 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { Link as RouterLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setCredentials, getCredentials, clearCredentials } from "../slice/authSlice";
+import { setCredentials, clearCredentials } from "../slice/authSlice";
 import { login } from "../api/authApi";
 import { toast } from "react-toastify";
 import { Navigate } from "react-router-dom";
 import { hasTokenExpired } from "../utils/utils";
+import { useSelector } from 'react-redux';
+
 const Login = () => {
   const dispatch = useDispatch();
 
-  // get credentials
-  const credentials = dispatch(getCredentials());
+  const credentials = useSelector((state) => state.auth);
+  console.log(credentials)
   const tokenHasExpired = hasTokenExpired(credentials.creation_time);
 
   // validate token existence and expiry
-  if (credentials.token !== "" && !tokenHasExpired)
-    return <Navigate to="/Home" replace />;
+  if (credentials.token && credentials.token !== " " && !tokenHasExpired)
+    {
+      console.log(credentials.token);
+      return <Navigate to="/Home" replace />
+    }
   else if(tokenHasExpired){
     toast.warn("Session Token has Expired, Logging out")
     dispatch(clearCredentials());
