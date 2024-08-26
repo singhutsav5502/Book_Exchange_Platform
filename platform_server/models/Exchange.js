@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
 const bookExchangeSchema = new mongoose.Schema({
-    bookId: { type: mongoose.Schema.Types.ObjectId, ref: 'Book', required: true },
+    bookIdAskedFor: { type: mongoose.Schema.Types.ObjectId, ref: 'Book', required: true },
+    bookIdSent: { type: mongoose.Schema.Types.ObjectId, ref: 'Book', required: true },
     fromUserId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     toUserId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     createdAt: { type: Date, default: Date.now }
