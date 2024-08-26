@@ -43,3 +43,26 @@ export const signup = async (username, password, firstName, lastName) => {
     throw error;
   }
 };
+
+export const getUserByUsername = async (username, token) => {
+  try {
+    const response = await fetch(`http://${process.env.REACT_APP_SERVER_URL}/user/${username}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to fetch user data');
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    throw error;
+  }
+};
