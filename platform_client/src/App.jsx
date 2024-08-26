@@ -13,6 +13,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import ClippedDrawer from "./components/ClippedDrawer.jsx";
+import ExchangeBooks from "./pages/ExchangeBooks.jsx";
 const theme = createTheme({
   palette: {
     mode: 'light', // Use 'dark' if you prefer a dark theme
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
   {
     path:"/books/discover",
     element: <ClippedDrawer><DiscoverBooks /></ClippedDrawer>
+  },
+  {
+    path:"/books/exchange",
+    element: <ClippedDrawer><ExchangeBooks /></ClippedDrawer>
   }
 ]);
 const App = () => {

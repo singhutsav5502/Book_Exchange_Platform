@@ -18,7 +18,7 @@ import { login } from "../api/authApi";
 import { toast } from "react-toastify";
 import { Navigate } from "react-router-dom";
 import { hasTokenExpired } from "../utils/utils";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -27,12 +27,10 @@ const Login = () => {
   const tokenHasExpired = hasTokenExpired(credentials.creation_time);
 
   // validate token existence and expiry
-  if (credentials.token && credentials.token !== " " && !tokenHasExpired)
-    {
-      return <Navigate to="/Home" replace />
-    }
-  else if(tokenHasExpired){
-    toast.warn("Session Token has Expired, Logging out")
+  if (credentials.token && credentials.token !== " " && !tokenHasExpired) {
+    return <Navigate to={`/user/${credentials.username}/`} replace />;
+  } else if (tokenHasExpired) {
+    toast.warn("Session Token has Expired, Logging out");
     dispatch(clearCredentials());
   }
 

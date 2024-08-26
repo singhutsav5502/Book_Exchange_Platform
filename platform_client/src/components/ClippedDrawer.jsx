@@ -47,11 +47,15 @@ export default function ClippedDrawer({ children }) {
                 link: `/user/${userData.username}`,
               },
               { name: "List Books", ico: <BookIcon />, link: "/books/list" },
-              { name: "Discover Books", ico: <SearchIcon />, link: "/books/discover" },
+              {
+                name: "Discover Books",
+                ico: <SearchIcon />,
+                link: "/books/discover",
+              },
               {
                 name: "Exchange Books",
                 ico: <CollectionsBookmarkIcon />,
-                link: "/Home",
+                link: "/books/exchange",
               },
               { name: "Log Out", ico: <LogoutIcon />, link: "/" },
             ].map((data, index) => (

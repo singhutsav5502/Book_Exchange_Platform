@@ -17,11 +17,10 @@ import { Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
 const Signup = () => {
   const dispatch = useDispatch();
-  const credentials = useSelector(state => state.auth);
-  if (credentials.token && credentials.token !== " " )
-    {
-      return <Navigate to="/Home" replace />
-    }
+  const credentials = useSelector((state) => state.auth);
+  if (credentials.token && credentials.token !== " ") {
+    return <Navigate to={`/user/${credentials.username}/`} replace />;
+  }
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -31,7 +30,13 @@ const Signup = () => {
     const password = formData.get("password");
     try {
       const tokenData = await signup(username, password, firstName, lastName);
-      dispatch(setCredentials({ username, token: tokenData.token, creation_time:tokenData.creation_time }));
+      dispatch(
+        setCredentials({
+          username,
+          token: tokenData.token,
+          creation_time: tokenData.creation_time,
+        })
+      );
       toast.success("Signup successful!");
     } catch (error) {
       toast.error(`An error ocurred: ${error.message}`);
