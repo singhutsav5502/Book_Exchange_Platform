@@ -76,7 +76,7 @@ app.post('/login', async (req, res) => {
     if (!user) {
         return res.status(400).json({ message: 'Invalid username or password' });
     }
-    
+
     // Check password
     const isMatch = await bcrypt.compare(password, user.passwordHash);
     if (!isMatch) {
@@ -87,7 +87,7 @@ app.post('/login', async (req, res) => {
     // Generate JWT token
     const token = jwt.sign({ username }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    res.json({ token, creation_time});
+    res.json({ token, creation_time });
 });
 app.get('/user/:username', authenticateToken, async (req, res) => {
     try {
@@ -104,7 +104,7 @@ app.get('/user/:username', authenticateToken, async (req, res) => {
 });
 app.get('/book/:bookId', authenticateToken, async (req, res) => {
     try {
-        const book = await Book.findById(req.params.bookId).populate('userId', 'username');
+        const book = await Book.findById(req.params.bookId).populate('username');
 
         if (!book) {
             return res.status(404).json({ message: 'Book not found' });
@@ -123,7 +123,7 @@ app.get('/books/find/:username', authenticateToken, async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        const books = await Book.find({ userId: user._id });
+        const books = await Book.find({ username: user.username });
         res.json(books);
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -139,13 +139,13 @@ app.get('/books/available/:username', authenticateToken, async (req, res) => {
         }
 
         // Get all books by the user
-        const userBooks = await Book.find({ userId: user._id });
+        const userBooks = await Book.find({ username: user.username });
 
         // Get all exchanged book IDs
         const exchanges = await BookExchange.find({
             $or: [
-                { fromUserId: user._id },
-                { toUserId: user._id }
+                { fromUsername: user.username },
+                { toUsername: user.username }
             ]
         });
 
@@ -160,6 +160,7 @@ app.get('/books/available/:username', authenticateToken, async (req, res) => {
 
         res.json(availableBooks);
     } catch (err) {
+        console.log(err)
         res.status(500).json({ message: err.message });
     }
 });
@@ -174,9 +175,7 @@ app.post('/books/add', authenticateToken, async (req, res) => {
         if (!title || !author) {
             return res.status(400).json({ message: 'Missing Title or Author name' });
         }
-
-        const userId = user._id;
-        const newBook = new Book({ title, author, genre, userId, username });
+        const newBook = new Book({ title, author, genre, username });
         await newBook.save();
         res.status(201).json(newBook);
     } catch (err) {
@@ -186,27 +185,27 @@ app.post('/books/add', authenticateToken, async (req, res) => {
 
 app.delete('/books/:id', authenticateToken, async (req, res) => {
     try {
-      const { id } = req.params; // Get the book ID from URL parameters
-      const book = await Book.findById(id);
-  
-      if (!book) {
-        return res.status(404).json({ message: 'Book not found' });
-      }
+        const { id } = req.params; // Get the book ID from URL parameters
+        const book = await Book.findById(id);
 
-      await Book.findByIdAndDelete(id);
-      await BookExchange.deleteMany({
-        $or: [
-            { bookIdAskedFor: id },
-            { bookIdSent: id }
-        ]
-    });
-      res.status(200).json({ message: 'Book removed successfully' });
+        if (!book) {
+            return res.status(404).json({ message: 'Book not found' });
+        }
+
+        await Book.findByIdAndDelete(id);
+        await BookExchange.deleteMany({
+            $or: [
+                { bookIdAskedFor: id },
+                { bookIdSent: id }
+            ]
+        });
+        res.status(200).json({ message: 'Book removed successfully' });
     } catch (err) {
-      res.status(400).json({ message: err.message });
+        res.status(400).json({ message: err.message });
     }
-  });
+});
 
-  app.get('/books', authenticateToken, async (req, res) => {
+app.get('/books', authenticateToken, async (req, res) => {
     try {
         const { username } = req.user;
         const user = await User.findOne({ username });
@@ -216,7 +215,7 @@ app.delete('/books/:id', authenticateToken, async (req, res) => {
         }
 
         // Fetch all books except those added by the current user
-        const books = await Book.find({ userId: { $ne: user._id } });
+        const books = await Book.find({ username: { $ne: user.username } });
 
         res.status(200).json(books);
     } catch (err) {
@@ -229,7 +228,7 @@ app.get('/books/filter', authenticateToken, async (req, res) => {
     try {
         const { genre, author, title } = req.query;
         const filter = {};
-        
+
         if (genre) filter.genre = new RegExp(genre, 'i'); // Case-insensitive search
         if (author) filter.author = new RegExp(author, 'i'); // Case-insensitive search
         if (title) filter.title = new RegExp(title, 'i');   // Case-insensitive search
@@ -243,7 +242,7 @@ app.get('/books/filter', authenticateToken, async (req, res) => {
     }
 });
 
-  
+
 
 app.post('/book-exchange', authenticateToken, async (req, res) => {
     try {
@@ -260,8 +259,8 @@ app.post('/book-exchange', authenticateToken, async (req, res) => {
         const newExchange = new BookExchange({
             bookIdAskedFor,
             bookIdSent,
-            fromUserId: fromUser._id,
-            toUserId: toUser._id
+            fromUsername: fromUser.username,
+            toUsername: toUser.username
         });
 
         await newExchange.save();
@@ -278,10 +277,15 @@ app.get('/book-exchange/received/:username', authenticateToken, async (req, res)
             return res.status(404).json({ message: 'User not found' });
         }
 
-        const exchanges = await BookExchange.find({ toUserId: user._id })
-            .populate('bookIdAskedFor', 'title')
-            .populate('bookIdSent', 'title')
-            .populate('fromUserId toUserId', 'username');
+        const exchanges = await BookExchange.find({ toUsername: user.username })
+            .populate({
+                path: 'bookIdAskedFor',
+                select: 'title author genre'
+            })
+            .populate({
+                path: 'bookIdSent',
+                select: 'title author genre'
+            });
 
         res.json(exchanges);
     } catch (err) {
@@ -297,10 +301,15 @@ app.get('/book-exchange/sent/:username', authenticateToken, async (req, res) => 
             return res.status(404).json({ message: 'User not found' });
         }
 
-        const exchanges = await BookExchange.find({ fromUserId: user._id })
-            .populate('bookIdAskedFor', 'title')
-            .populate('bookIdSent', 'title')
-            .populate('fromUserId toUserId', 'username');
+        const exchanges = await BookExchange.find({ fromUsername: user.username })
+            .populate({
+                path: 'bookIdAskedFor',
+                select: 'title author genre'
+            })
+            .populate({
+                path: 'bookIdSent',
+                select: 'title author genre'
+            });
 
         res.json(exchanges);
     } catch (err) {
@@ -321,17 +330,16 @@ app.post('/book-exchange/accept/:exchangeId', authenticateToken, async (req, res
         // Find the books involved in the exchange
         const bookAskedFor = await Book.findById(exchange.bookIdAskedFor);
         const bookSent = await Book.findById(exchange.bookIdSent);
+        const toUser = await User.findOne({ username: bookAskedFor.username });
+        const fromUser = await User.findOne({ username: bookSent.username });
 
         if (!bookAskedFor || !bookSent) {
             return res.status(404).json({ message: 'One or both books not found' });
         }
 
         // Swap the ownership of the books
-        bookAskedFor.userId = exchange.toUserId;
-        const tmp = exchange.username;
-        exchange.username = bookAskedFor.username;
-        bookAskedFor.username = tmp;
-        bookSent.userId = exchange.fromUserId;
+        bookAskedFor.username = fromUser.username
+        bookSent.username = toUser.username
 
         await bookAskedFor.save();
         await bookSent.save();
@@ -345,7 +353,7 @@ app.post('/book-exchange/accept/:exchangeId', authenticateToken, async (req, res
                 { bookIdSent: bookSent._id }
             ]
         });
-        
+
         res.status(200).json({ message: 'Book exchange accepted and books swapped' });
     } catch (err) {
         res.status(500).json({ message: err.message });
