@@ -24,13 +24,11 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const credentials = useSelector((state) => state.auth);
-  console.log(credentials)
   const tokenHasExpired = hasTokenExpired(credentials.creation_time);
 
   // validate token existence and expiry
   if (credentials.token && credentials.token !== " " && !tokenHasExpired)
     {
-      console.log(credentials.token);
       return <Navigate to="/Home" replace />
     }
   else if(tokenHasExpired){
@@ -74,7 +72,7 @@ const Login = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Login
         </Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
           <TextField
@@ -107,7 +105,7 @@ const Login = () => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign In
+            Login
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>

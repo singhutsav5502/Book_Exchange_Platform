@@ -2,13 +2,17 @@ import React from "react";
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
 import Home from "./pages/Home.jsx";
+import UserProfile from "./pages/UserProfile.jsx";
 import Background from "./components/Background.jsx";
+import ListBooks from "./pages/ListBooks.jsx";
+import DiscoverBooks from "./pages/DiscoverBooks.jsx";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
   Navigate,
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import ClippedDrawer from "./components/ClippedDrawer.jsx";
 const theme = createTheme({
   palette: {
     mode: 'light', // Use 'dark' if you prefer a dark theme
@@ -44,7 +48,19 @@ const router = createBrowserRouter([
   },
   {
     path:"/Home",
-    element: <Home />
+    element: <ClippedDrawer><Home /></ClippedDrawer>
+  },
+  {
+    path:"/user/:username",
+    element: <ClippedDrawer><UserProfile /></ClippedDrawer>
+  },
+  {
+    path:"/books/list",
+    element: <ClippedDrawer><ListBooks /></ClippedDrawer>
+  },
+  {
+    path:"/books/discover",
+    element: <ClippedDrawer><DiscoverBooks /></ClippedDrawer>
   }
 ]);
 const App = () => {

@@ -11,11 +11,17 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Link as RouterLink } from "react-router-dom";
 import { signup } from "../api/authApi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "../slice/authSlice";
+import { Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
 const Signup = () => {
   const dispatch = useDispatch();
+  const credentials = useSelector(state => state.auth);
+  if (credentials.token && credentials.token !== " " )
+    {
+      return <Navigate to="/Home" replace />
+    }
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
