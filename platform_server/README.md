@@ -29,7 +29,6 @@ This API provides endpoints for managing user authentication, books, and book ex
 **Request Body:**
 ```
 json
-Copy code
 {
   "username": "string",
   "password": "string"
@@ -89,7 +88,6 @@ Authorization: Bearer <token>
 **Request Body:**
 ```
 json
-Copy code
 {
   "title": "string",
   "author": "string",
@@ -149,7 +147,6 @@ Response:
 **Request Body:**
 ```
 json
-Copy code
 {
   "bookIdAskedFor": "string",
   "bookIdSent": "string",
