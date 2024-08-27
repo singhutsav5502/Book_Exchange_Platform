@@ -27,8 +27,7 @@ This API provides endpoints for managing user authentication, books, and book ex
 **Description:** Authenticates a user and returns a JWT token.
 
 **Request Body:**
-```
-json
+```json
 {
   "username": "string",
   "password": "string"
@@ -86,8 +85,7 @@ Response:
 **Description:** Adds a new book to the user's collection.
 
 **Request Body:**
-```
-json
+```json
 {
   "title": "string",
   "author": "string",
@@ -145,8 +143,7 @@ Response:
 **Description:** Creates a new book exchange request.
 
 **Request Body:**
-```
-json
+```json
 {
   "bookIdAskedFor": "string",
   "bookIdSent": "string",
@@ -207,7 +204,7 @@ This project requires the following dependencies:
 
 - **express**: A web framework for Node.js.
 - **mongoose**: An ODM (Object Data Modeling) library for MongoDB and Node.js.
-- **jsonwebtoken**: A library to work with JSON Web Tokens.
+- *jsonwebtoken**: A library to work withJSON Web Tokens.
 - **bcryptjs**: A library to hash passwords and manage user authentication.
 - **dotenv**: A module to load environment variables from a `.env` file.
 - **cors**: A package to enable Cross-Origin Resource Sharing.
