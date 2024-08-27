@@ -1,7 +1,6 @@
 import React from "react";
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
-import Home from "./pages/Home.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
 import Background from "./components/Background.jsx";
 import ListBooks from "./pages/ListBooks.jsx";
@@ -46,10 +45,6 @@ const router = createBrowserRouter([
   {
     path: "/sign-up",
     element: <Background><Signup /></Background>,
-  },
-  {
-    path:"/Home",
-    element: <ClippedDrawer><Home /></ClippedDrawer>
   },
   {
     path:"/user/:username",
