@@ -20,7 +20,7 @@ This API provides endpoints for managing user authentication, books, and book ex
 }
 ```
 
-## Endpoint* /login
+# Endpoint:  /login
 
 **Method:** POST
 
@@ -35,7 +35,7 @@ This API provides endpoints for managing user authentication, books, and book ex
 ```
 Response:
 
-## Endpoint: /user/:username
+# Endpoint: /user/:username
 
 **Method:** GET
 
@@ -47,7 +47,7 @@ Response:
 Response:
 
 # Book Management
-## Endpoint: /book/:bookId
+# Endpoint: /book/:bookId
 
 **Method:** GET
 
@@ -58,7 +58,7 @@ Response:
 ```Authorization: Bearer <token>```
 Response:
 
-## Endpoint: /books/find/:username
+# Endpoint: /books/find/:username
 
 **Method:** GET
 
@@ -68,7 +68,7 @@ Response:
 
 ```Authorization: Bearer <token>```
 
-## Endpoint: /books/available/:username
+# Endpoint: /books/available/:username
 
 **Method:** GET
 
@@ -78,7 +78,7 @@ Response:
 
 ```Authorization: Bearer <token>```
 
-## Endpoint: /books/add
+# Endpoint: /books/add
 
 **Method:** POST
 
@@ -97,7 +97,7 @@ Response:
 
 ```Authorization: Bearer <token>```
 
-## Endpoint: /books/:id
+# Endpoint: /books/:id
 
 **Method:** DELETE
 
@@ -107,7 +107,7 @@ Response:
 
 ```Authorization: Bearer <token>```
 
-## Endpoint: /books
+# Endpoint: /books
 
 **Method:** GET
 
@@ -118,7 +118,7 @@ Response:
 ```Authorization: Bearer <token>```
 Response:
 
-## Endpoint: /books/filter
+# Endpoint: /books/filter
 
 **Method:** GET
 
@@ -136,7 +136,7 @@ Response:
 
 
 # Book Exchange
-## Endpoint: /book-exchange
+# Endpoint: /book-exchange
 
 **Method:** POST
 
@@ -156,7 +156,7 @@ Response:
 ```Authorization: Bearer <token>```
 Response:
 
-## Endpoint: /book-exchange/received/:username
+# Endpoint: /book-exchange/received/:username
 
 **Method:** GET
 
@@ -166,7 +166,7 @@ Response:
 
 ```Authorization: Bearer <token>```
 
-## Endpoint: /book-exchange/sent/:username
+# Endpoint: /book-exchange/sent/:username
 
 **Method:** GET
 
@@ -176,7 +176,7 @@ Response:
 
 ```Authorization: Bearer <token>```
 
-**Endpoint**: /book-exchange/accept/:exchangeId
+# Endpoint: /book-exchange/accept/:exchangeId
 
 **Method:** POST
 
@@ -187,7 +187,7 @@ Response:
 ```Authorization: Bearer <token>```
 Response:
 
-**Endpoint**: /book-exchange/refuse/:exchangeId
+# Endpoint: /book-exchange/refuse/:exchangeId
 
 **Method:** POST
 
