@@ -15,19 +15,32 @@ import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Link from "@mui/material/Link";
 import { Link as RouterLink } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { clearCredentials } from "../slice/authSlice";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import { useTheme, useMediaQuery } from "@mui/material";
+
 const drawerWidth = 240;
 
 export default function ClippedDrawer({ children }) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [open, setOpen] = React.useState(false);
   const userData = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
+  const handleDrawerToggle = () => {
+    setOpen(!open);
+  };
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <Drawer
-        variant="permanent"
+        variant={isMobile ? "temporary" : "permanent"}
+        open={isMobile ? open : true}
+        onClose={handleDrawerToggle}
         sx={{
           width: drawerWidth,
           flexShrink: 0,
@@ -67,6 +80,7 @@ export default function ClippedDrawer({ children }) {
                   width={`100%`}
                   onClick={() => {
                     if (data.link === "/") dispatch(clearCredentials());
+                    if (isMobile) setOpen(false);
                   }}
                 >
                   <ListItemButton>
@@ -80,7 +94,19 @@ export default function ClippedDrawer({ children }) {
         </Box>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <Toolbar />
+        <Toolbar>
+          {isMobile && (
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
+        </Toolbar>
         {children}
       </Box>
     </Box>
