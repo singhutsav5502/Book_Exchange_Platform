@@ -2,8 +2,7 @@
 
 ## Overview
 
-This API provides endpoints for managing user authentication, books, and book exchanges. It allows users to sign up, log in, manage their book collection, and exchange books with other users.
-
+This API provides endpoints `for managing user authentication, books, and book exchanges. It`allows users to sign up, log in, manage their book collection, and exchange books with other users.
 
 # Endpoint: `/signup`
 
@@ -11,6 +10,7 @@ This API provides endpoints for managing user authentication, books, and book ex
 
 **Description:** Registers a new user and returns a JWT token.
 **Request Body:**
+
 ```json
 {
   "username": "string",
@@ -20,22 +20,24 @@ This API provides endpoints for managing user authentication, books, and book ex
 }
 ```
 
-# Endpoint:  /login
+# Endpoint: `/login`
 
 **Method:** POST
 
 **Description:** Authenticates a user and returns a JWT token.
 
 **Request Body:**
+
 ```json
 {
   "username": "string",
   "password": "string"
 }
 ```
+
 Response:
 
-# Endpoint: /user/:username
+# Endpoint: `/user/:username`
 
 **Method:** GET
 
@@ -43,11 +45,12 @@ Response:
 
 **Request Headers:**
 
-```Authorization: Bearer <token>```
+`Authorization: Bearer <token>`
 Response:
 
 # Book Management
-# Endpoint: /book/:bookId
+
+# Endpoint: `/book/:bookId`
 
 **Method:** GET
 
@@ -55,10 +58,10 @@ Response:
 
 **Request Headers:**
 
-```Authorization: Bearer <token>```
+`Authorization: Bearer <token>`
 Response:
 
-# Endpoint: /books/find/:username
+# Endpoint: `/books/find/:username`
 
 **Method:** GET
 
@@ -66,9 +69,9 @@ Response:
 
 **Request Headers:**
 
-```Authorization: Bearer <token>```
+`Authorization: Bearer <token>`
 
-# Endpoint: /books/available/:username
+# Endpoint: `/books/available/:username`
 
 **Method:** GET
 
@@ -76,15 +79,16 @@ Response:
 
 **Request Headers:**
 
-```Authorization: Bearer <token>```
+`Authorization: Bearer <token>`
 
-# Endpoint: /books/add
+# Endpoint: `/books/add`
 
 **Method:** POST
 
 **Description:** Adds a new book to the user's collection.
 
 **Request Body:**
+
 ```json
 {
   "title": "string",
@@ -93,11 +97,12 @@ Response:
   "username": "string"
 }
 ```
+
 **Request Headers:**
 
-```Authorization: Bearer <token>```
+`Authorization: Bearer <token>`
 
-# Endpoint: /books/:id
+# Endpoint: `/books/:id`
 
 **Method:** DELETE
 
@@ -105,9 +110,9 @@ Response:
 
 **Request Headers:**
 
-```Authorization: Bearer <token>```
+`Authorization: Bearer <token>`
 
-# Endpoint: /books
+# Endpoint: `/books`
 
 **Method:** GET
 
@@ -115,10 +120,10 @@ Response:
 
 **Request Headers:**
 
-```Authorization: Bearer <token>```
+`Authorization: Bearer <token>`
 Response:
 
-# Endpoint: /books/filter
+# Endpoint: `/books/filter`
 
 **Method:** GET
 
@@ -131,18 +136,19 @@ author: Optional filter by author
 title: Optional filter by title
 Request Headers:
 
-```Authorization: Bearer <token>```
+`Authorization: Bearer <token>`
 Response:
 
-
 # Book Exchange
-# Endpoint: /book-exchange
+
+# Endpoint: `/book-exchange`
 
 **Method:** POST
 
 **Description:** Creates a new book exchange request.
 
 **Request Body:**
+
 ```json
 {
   "bookIdAskedFor": "string",
@@ -151,12 +157,13 @@ Response:
   "toUsername": "string"
 }
 ```
+
 **Request Headers:**
 
-```Authorization: Bearer <token>```
+`Authorization: Bearer <token>`
 Response:
 
-# Endpoint: /book-exchange/received/:username
+# Endpoint: `/book-exchange/received/:username`
 
 **Method:** GET
 
@@ -164,9 +171,9 @@ Response:
 
 **Request Headers:**
 
-```Authorization: Bearer <token>```
+`Authorization: Bearer <token>`
 
-# Endpoint: /book-exchange/sent/:username
+# Endpoint: `/book-exchange/sent/:username`
 
 **Method:** GET
 
@@ -174,9 +181,9 @@ Response:
 
 **Request Headers:**
 
-```Authorization: Bearer <token>```
+`Authorization: Bearer <token>`
 
-# Endpoint: /book-exchange/accept/:exchangeId
+# Endpoint: `/book-exchange/accept/:exchangeId`
 
 **Method:** POST
 
@@ -184,10 +191,10 @@ Response:
 
 **Request Headers:**
 
-```Authorization: Bearer <token>```
+`Authorization: Bearer <token>`
 Response:
 
-# Endpoint: /book-exchange/refuse/:exchangeId
+# Endpoint: `/book-exchange/refuse/:exchangeId`
 
 **Method:** POST
 
@@ -195,7 +202,7 @@ Response:
 
 **Request Headers:**
 
-```Authorization: Bearer <token>```
+`Authorization: Bearer <token>`
 Response:
 
 ## Dependencies
@@ -204,10 +211,11 @@ This project requires the following dependencies:
 
 - **express**: A web framework for Node.js.
 - **mongoose**: An ODM (Object Data Modeling) library for MongoDB and Node.js.
-- *jsonwebtoken**: A library to work withJSON Web Tokens.
+- \*jsonwebtoken\*\*: A library to work withJSON Web Tokens.
 - **bcryptjs**: A library to hash passwords and manage user authentication.
 - **dotenv**: A module to load environment variables from a `.env` file.
 - **cors**: A package to enable Cross-Origin Resource Sharing.
 
 ## Security
+
 The API uses JWT for authentication. Ensure the Authorization header contains a valid JWT token for protected routes.
