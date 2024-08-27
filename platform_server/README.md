@@ -44,7 +44,7 @@ Response:
 
 **Request Headers:**
 
-Authorization: Bearer <token>
+```Authorization: Bearer <token>```
 Response:
 
 # Book Management
@@ -56,7 +56,7 @@ Response:
 
 **Request Headers:**
 
-Authorization: Bearer <token>
+```Authorization: Bearer <token>```
 Response:
 
 ## Endpoint: /books/find/:username
@@ -67,7 +67,7 @@ Response:
 
 **Request Headers:**
 
-Authorization: Bearer <token>
+```Authorization: Bearer <token>```
 
 ## Endpoint: /books/available/:username
 
@@ -77,7 +77,7 @@ Authorization: Bearer <token>
 
 **Request Headers:**
 
-Authorization: Bearer <token>
+```Authorization: Bearer <token>```
 
 ## Endpoint: /books/add
 
@@ -97,7 +97,7 @@ json
 ```
 **Request Headers:**
 
-Authorization: Bearer <token>
+```Authorization: Bearer <token>```
 
 ## Endpoint: /books/:id
 
@@ -107,7 +107,7 @@ Authorization: Bearer <token>
 
 **Request Headers:**
 
-Authorization: Bearer <token>
+```Authorization: Bearer <token>```
 
 ## Endpoint: /books
 
@@ -117,7 +117,7 @@ Authorization: Bearer <token>
 
 **Request Headers:**
 
-Authorization: Bearer <token>
+```Authorization: Bearer <token>```
 Response:
 
 ## Endpoint: /books/filter
@@ -133,7 +133,7 @@ author: Optional filter by author
 title: Optional filter by title
 Request Headers:
 
-Authorization: Bearer <token>
+```Authorization: Bearer <token>```
 Response:
 
 
@@ -156,7 +156,7 @@ json
 ```
 **Request Headers:**
 
-Authorization: Bearer <token>
+```Authorization: Bearer <token>```
 Response:
 
 ## Endpoint: /book-exchange/received/:username
@@ -167,7 +167,7 @@ Response:
 
 **Request Headers:**
 
-Authorization: Bearer <token>
+```Authorization: Bearer <token>```
 
 ## Endpoint: /book-exchange/sent/:username
 
@@ -177,7 +177,7 @@ Authorization: Bearer <token>
 
 **Request Headers:**
 
-Authorization: Bearer <token>
+```Authorization: Bearer <token>```
 
 **Endpoint**: /book-exchange/accept/:exchangeId
 
@@ -187,7 +187,7 @@ Authorization: Bearer <token>
 
 **Request Headers:**
 
-Authorization: Bearer <token>
+```Authorization: Bearer <token>```
 Response:
 
 **Endpoint**: /book-exchange/refuse/:exchangeId
@@ -198,7 +198,7 @@ Response:
 
 **Request Headers:**
 
-Authorization: Bearer <token>
+```Authorization: Bearer <token>```
 Response:
 
 ## Dependencies
