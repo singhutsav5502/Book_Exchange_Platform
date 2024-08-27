@@ -168,13 +168,25 @@ app.get('/books/available/:username', authenticateToken, async (req, res) => {
 app.post('/books/add', authenticateToken, async (req, res) => {
     try {
         const { title, author, genre, username } = req.body;
+        
+        // Check if user exists
         const user = await User.findOne({ username });
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
+        
+        // Check for missing required fields
         if (!title || !author) {
             return res.status(400).json({ message: 'Missing Title or Author name' });
         }
+        
+        // Check if a book with the same title, author, and username already exists
+        const existingBook = await Book.findOne({ title, author, username });
+        if (existingBook) {
+            return res.status(409).json({ message: 'A book with the same title and author already exists for this user' });
+        }
+        
+        // If no existing book found, create and save the new book
         const newBook = new Book({ title, author, genre, username });
         await newBook.save();
         res.status(201).json(newBook);
