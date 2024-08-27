@@ -11,20 +11,19 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import { Link as RouterLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { Link as RouterLink, Navigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { setCredentials, clearCredentials } from "../slice/authSlice";
 import { login } from "../api/authApi";
 import { toast } from "react-toastify";
-import { Navigate } from "react-router-dom";
 import { hasTokenExpired } from "../utils/utils";
-import { useSelector } from "react-redux";
+import Loading from "../components/Loading"
 
 const Login = () => {
   const dispatch = useDispatch();
-
   const credentials = useSelector((state) => state.auth);
   const tokenHasExpired = hasTokenExpired(credentials.creation_time);
+  const [loading, setLoading] = React.useState(false);
 
   // validate token existence and expiry
   if (credentials.token && credentials.token !== " " && !tokenHasExpired) {
@@ -37,6 +36,7 @@ const Login = () => {
   // Login
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true); // Start loading state
     const formData = new FormData(event.currentTarget);
     const username = formData.get("username");
     const password = formData.get("password");
@@ -51,11 +51,15 @@ const Login = () => {
       );
       toast.success("Login successful!");
     } catch (error) {
-      toast.error(`An error ocurred: ${error.message}`);
+      toast.error(`An error occurred: ${error.message}`);
+    } finally {
+      setLoading(false); // End loading state
     }
   };
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
@@ -78,7 +82,7 @@ const Login = () => {
             required
             fullWidth
             id="username"
-            label="username"
+            label="Username"
             name="username"
             autoComplete="username"
             autoFocus
@@ -117,4 +121,5 @@ const Login = () => {
     </Container>
   );
 };
+
 export default Login;

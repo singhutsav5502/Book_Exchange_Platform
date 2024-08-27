@@ -22,22 +22,26 @@ import {
 } from "../api/bookExchange";
 import Link from "@mui/material/Link";
 import { Link as RouterLink } from "react-router-dom";
+import Loading from "../components/Loading";
+
 const ExchangeBooks = () => {
   const { username, token } = useSelector((state) => state.auth);
   const [receivedExchanges, setReceivedExchanges] = useState([]);
   const [sentExchanges, setSentExchanges] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchExchanges = async () => {
+      setLoading(true);
       try {
         const receivedData = await getReceivedBookExchanges(username, token);
         setReceivedExchanges(receivedData);
         const sentData = await getSentBookExchanges(username, token);
         setSentExchanges(sentData);
-        console.log(receivedData);
-        console.log(sentData);
       } catch (error) {
         console.error("Error fetching book exchanges:", error);
+      } finally {
+        setLoading(false); // Set loading to false after fetch
       }
     };
 
@@ -65,6 +69,11 @@ const ExchangeBooks = () => {
       console.error("Error refusing book exchange:", error);
     }
   };
+
+  if (loading) {
+    return <Loading />; // Show loading component while fetching data
+  }
+
 
   return (
     <div style={{ color: "#333", backgroundColor: "#f0f0f0", padding: "20px" }}>

@@ -1,6 +1,6 @@
 export const login = async (username, password) => {
   try {
-    const response = await fetch(`http://${process.env.REACT_APP_SERVER_URL}/login`, {
+    const response = await fetch(`https://${process.env.REACT_APP_SERVER_URL}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -23,7 +23,7 @@ export const login = async (username, password) => {
 
 export const signup = async (username, password, firstName, lastName) => {
   try {
-    const response = await fetch(`http://${process.env.REACT_APP_SERVER_URL}/signup`, {
+    const response = await fetch(`https://${process.env.REACT_APP_SERVER_URL}/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ export const signup = async (username, password, firstName, lastName) => {
 
 export const getUserByUsername = async (username, token) => {
   try {
-    const response = await fetch(`http://${process.env.REACT_APP_SERVER_URL}/user/${username}`, {
+    const response = await fetch(`https://${process.env.REACT_APP_SERVER_URL}/user/${username}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

@@ -1,25 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 import { TextField, Button, Container, Typography, Box, List, ListItem, ListItemText, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { addBook, deleteBook, getBooksByUsername } from '../api/bookApi';
 import { toast } from 'react-toastify';
+import Loading from '../components/Loading';
 
 const ListBooks = () => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [genre, setGenre] = useState('');
   const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true); 
   const { token, username } = useSelector((state) => state.auth);
 
   // Fetch books when component mounts or username/token changes
   useEffect(() => {
     const fetchBooks = async () => {
+      setLoading(true); 
       try {
         const bookData = await getBooksByUsername(username, token);
         setBooks(bookData);
       } catch (error) {
         toast.error(`Error fetching books: ${error.message}`);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -37,23 +42,32 @@ const ListBooks = () => {
       setAuthor('');
       setGenre('');
       // Refetch books after adding
+      setLoading(true); // Set loading to true before refetch
       const updatedBooks = await getBooksByUsername(username, token);
       setBooks(updatedBooks);
     } catch (error) {
       toast.error(`Error adding book: ${error.message}`);
+    } finally {
+      setLoading(false); // Set loading to false after fetch
     }
   };
+
   const handleRemoveBook = async (bookId) => {
     try {
       await deleteBook(bookId, token);
       toast.success('Book removed successfully!');
       // Refetch books after removal
+      setLoading(true); // Set loading to true before refetch
       const updatedBooks = await getBooksByUsername(username, token);
       setBooks(updatedBooks);
     } catch (error) {
       toast.error(`Error removing book: ${error.message}`);
+    } finally {
+      setLoading(false); // Set loading to false after fetch
     }
   };
+
+
   return (
     <Container component="main" maxWidth="md">
       <Typography component="h1" variant="h5">
@@ -99,30 +113,30 @@ const ListBooks = () => {
         </Button>
       </Box>
 
-      <Box sx={{ mt: 5 }}>
+      {loading? <Loading/> : <Box sx={{ mt: 5 }}>
         <Typography component="h2" variant="h6">
           Your Books
         </Typography>
         <List>
           {books.map((book) => (
             <ListItem key={book._id} sx={{ display: 'flex', alignItems: 'center' }}>
-            <IconButton 
-              edge="start" 
-              color="error" 
-              aria-label="remove" 
-              onClick={() => handleRemoveBook(book._id)}
-            >
-              <DeleteIcon />
-            </IconButton>
-            <ListItemText
-              primary={`${book.title} by ${book.author}`}
-              secondary={`Genre: ${book.genre.join(', ')}`}
-              sx={{ ml: 2 }}
-            />
-          </ListItem>
+              <IconButton 
+                edge="start" 
+                color="error" 
+                aria-label="remove" 
+                onClick={() => handleRemoveBook(book._id)}
+              >
+                <DeleteIcon />
+              </IconButton>
+              <ListItemText
+                primary={`${book.title} by ${book.author}`}
+                secondary={`Genre: ${book.genre.join(', ')}`}
+                sx={{ ml: 2 }}
+              />
+            </ListItem>
           ))}
         </List>
-      </Box>
+      </Box>}
     </Container>
   );
 };

@@ -1,7 +1,7 @@
 
 export const getBookById = async (bookId, token) => {
     try {
-      const response = await fetch(`http://${process.env.REACT_APP_SERVER_URL}/book/${bookId}`, {
+      const response = await fetch(`https://${process.env.REACT_APP_SERVER_URL}/book/${bookId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -24,7 +24,7 @@ export const getBookById = async (bookId, token) => {
   
   export const getBooksByUsername = async (username, token) => {
     try {
-      const response = await fetch(`http://${process.env.REACT_APP_SERVER_URL}/books/find/${username}`, {
+      const response = await fetch(`https://${process.env.REACT_APP_SERVER_URL}/books/find/${username}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -47,7 +47,7 @@ export const getBookById = async (bookId, token) => {
   
   export const addBook = async (title, author, genre, username, token) => {
     try {
-      const response = await fetch(`http://${process.env.REACT_APP_SERVER_URL}/books/add`, {
+      const response = await fetch(`https://${process.env.REACT_APP_SERVER_URL}/books/add`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ export const getBookById = async (bookId, token) => {
   
   export const deleteBook = async (bookId, token) => {
     try {
-      const response = await fetch(`http://${process.env.REACT_APP_SERVER_URL}/books/${bookId}`, {
+      const response = await fetch(`https://${process.env.REACT_APP_SERVER_URL}/books/${bookId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ export const getBookById = async (bookId, token) => {
       if (author) query.append('author', author);
       if (title) query.append('title', title);
   
-      const response = await fetch(`http://${process.env.REACT_APP_SERVER_URL}/books/filter?${query.toString()}`, {
+      const response = await fetch(`https://${process.env.REACT_APP_SERVER_URL}/books/filter?${query.toString()}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -122,7 +122,7 @@ export const getBookById = async (bookId, token) => {
   // Fetch user's books that are not part of any exchange
 export const getUnexchangedUserBooks = async (username,token) => {
   try {
-      const response = await fetch(`http://${process.env.REACT_APP_SERVER_URL}/books/available/${username}`, {
+      const response = await fetch(`https://${process.env.REACT_APP_SERVER_URL}/books/available/${username}`, {
           method: 'GET',
           headers: {
               'Content-Type': 'application/json',

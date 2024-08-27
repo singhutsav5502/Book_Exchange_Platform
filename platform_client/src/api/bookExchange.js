@@ -2,7 +2,7 @@
 // Create Book Exchange Request
 export const createBookExchange = async (bookIdAskedFor, bookIdSent, fromUsername, toUsername, token) => {
   try {
-    const response = await fetch(`http://${process.env.REACT_APP_SERVER_URL}/book-exchange`, {
+    const response = await fetch(`https://${process.env.REACT_APP_SERVER_URL}/book-exchange`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ export const createBookExchange = async (bookIdAskedFor, bookIdSent, fromUsernam
 // Get Received Book Exchanges
 export const getReceivedBookExchanges = async (username, token) => {
   try {
-    const response = await fetch(`http://${process.env.REACT_APP_SERVER_URL}/book-exchange/received/${username}`, {
+    const response = await fetch(`https://${process.env.REACT_APP_SERVER_URL}/book-exchange/received/${username}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ export const getReceivedBookExchanges = async (username, token) => {
 // Get Sent Book Exchanges
 export const getSentBookExchanges = async (username, token) => {
   try {
-    const response = await fetch(`http://${process.env.REACT_APP_SERVER_URL}/book-exchange/sent/${username}`, {
+    const response = await fetch(`https://${process.env.REACT_APP_SERVER_URL}/book-exchange/sent/${username}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ export const getSentBookExchanges = async (username, token) => {
 // Accept Book Exchange
 export const acceptBookExchange = async (exchangeId, token) => {
   try {
-    const response = await fetch(`http://${process.env.REACT_APP_SERVER_URL}/book-exchange/accept/${exchangeId}`, {
+    const response = await fetch(`https://${process.env.REACT_APP_SERVER_URL}/book-exchange/accept/${exchangeId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ export const acceptBookExchange = async (exchangeId, token) => {
 // Refuse Book Exchange
 export const refuseBookExchange = async (exchangeId, token) => {
   try {
-    const response = await fetch(`http://${process.env.REACT_APP_SERVER_URL}/book-exchange/refuse/${exchangeId}`, {
+    const response = await fetch(`https://${process.env.REACT_APP_SERVER_URL}/book-exchange/refuse/${exchangeId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

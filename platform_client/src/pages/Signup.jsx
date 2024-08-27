@@ -9,20 +9,24 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, Navigate } from "react-router-dom";
 import { signup } from "../api/authApi";
 import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "../slice/authSlice";
-import { Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Loading from "../components/Loading"
 const Signup = () => {
   const dispatch = useDispatch();
   const credentials = useSelector((state) => state.auth);
+  const [loading, setLoading] = React.useState(false);
+
   if (credentials.token && credentials.token !== " ") {
     return <Navigate to={`/user/${credentials.username}/`} replace />;
   }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true); // Start loading state
     const formData = new FormData(event.currentTarget);
     const username = formData.get("username");
     const firstName = formData.get("firstName");
@@ -39,11 +43,15 @@ const Signup = () => {
       );
       toast.success("Signup successful!");
     } catch (error) {
-      toast.error(`An error ocurred: ${error.message}`);
+      toast.error(`An error occurred: ${error.message}`);
+    } finally {
+      setLoading(false); // End loading state
     }
   };
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
@@ -88,7 +96,7 @@ const Signup = () => {
                 required
                 fullWidth
                 id="username"
-                label="username"
+                label="Username"
                 name="username"
                 autoComplete="username"
               />
