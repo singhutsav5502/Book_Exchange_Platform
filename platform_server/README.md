@@ -5,7 +5,7 @@
 This API provides endpoints for managing user authentication, books, and book exchanges. It allows users to sign up, log in, manage their book collection, and exchange books with other users.
 
 
-## Endpoint* `/signup`
+# Endpoint: `/signup`
 
 **Method:**`POST`
 
