@@ -5,7 +5,7 @@
 This API provides endpoints for managing user authentication, books, and book exchanges. It allows users to sign up, log in, manage their book collection, and exchange books with other users.
 
 
-**Endpoint:** `/signup`
+## Endpoint* `/signup`
 
 **Method:**`POST`
 
@@ -20,7 +20,7 @@ This API provides endpoints for managing user authentication, books, and book ex
 }
 ```
 
-**Endpoint:** /login
+## Endpoint* /login
 
 **Method:** POST
 
@@ -36,7 +36,7 @@ json
 ```
 Response:
 
-**Endpoint**: /user/:username
+## Endpoint: /user/:username
 
 **Method:** GET
 
@@ -48,7 +48,7 @@ Authorization: Bearer <token>
 Response:
 
 # Book Management
-**Endpoint**: /book/:bookId
+## Endpoint: /book/:bookId
 
 **Method:** GET
 
@@ -59,7 +59,7 @@ Response:
 Authorization: Bearer <token>
 Response:
 
-**Endpoint**: /books/find/:username
+## Endpoint: /books/find/:username
 
 **Method:** GET
 
@@ -69,7 +69,7 @@ Response:
 
 Authorization: Bearer <token>
 
-**Endpoint**: /books/available/:username
+## Endpoint: /books/available/:username
 
 **Method:** GET
 
@@ -79,7 +79,7 @@ Authorization: Bearer <token>
 
 Authorization: Bearer <token>
 
-**Endpoint**: /books/add
+## Endpoint: /books/add
 
 **Method:** POST
 
@@ -99,7 +99,7 @@ json
 
 Authorization: Bearer <token>
 
-**Endpoint**: /books/:id
+## Endpoint: /books/:id
 
 **Method:** DELETE
 
@@ -109,7 +109,7 @@ Authorization: Bearer <token>
 
 Authorization: Bearer <token>
 
-**Endpoint**: /books
+## Endpoint: /books
 
 **Method:** GET
 
@@ -120,7 +120,7 @@ Authorization: Bearer <token>
 Authorization: Bearer <token>
 Response:
 
-**Endpoint**: /books/filter
+## Endpoint: /books/filter
 
 **Method:** GET
 
@@ -138,7 +138,7 @@ Response:
 
 
 # Book Exchange
-**Endpoint**: /book-exchange
+## Endpoint: /book-exchange
 
 **Method:** POST
 
@@ -159,7 +159,7 @@ json
 Authorization: Bearer <token>
 Response:
 
-**Endpoint**: /book-exchange/received/:username
+## Endpoint: /book-exchange/received/:username
 
 **Method:** GET
 
@@ -169,7 +169,7 @@ Response:
 
 Authorization: Bearer <token>
 
-**Endpoint**: /book-exchange/sent/:username
+## Endpoint: /book-exchange/sent/:username
 
 **Method:** GET
 
